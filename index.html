@@ -38,6 +38,8 @@ select:focus { outline: none; border-color: #2563eb; }
 .btn-primary:active { transform: scale(0.99); }
 .btn-primary.secondary { background: #fff; color: #1a1a1a; border: 1.5px solid #e8e8e8; margin-top: 10px; }
 .btn-primary.secondary:hover { background: #f5f5f5; opacity: 1; }
+.btn-primary.outline-blue { background: #fff; color: #2563eb; border: 1.5px solid #2563eb; margin-top: 10px; }
+.btn-primary.outline-blue:hover { background: #eff6ff; opacity: 1; }
 .progress-wrap { padding: 16px 20px 0; }
 .progress-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
 .progress-num { font-size: 13px; color: #888; }
@@ -99,12 +101,6 @@ select:focus { outline: none; border-color: #2563eb; }
 .empty-state { text-align: center; padding: 48px 20px; color: #bbb; font-size: 14px; }
 .empty-icon { font-size: 36px; margin-bottom: 12px; display: block; }
 .divider { height: 1px; background: #f0f0f0; margin: 20px 0; }
-.qnet-list { display: flex; flex-direction: column; gap: 8px; }
-.qnet-item { border: 1.5px solid #e8e8e8; border-radius: 12px; padding: 13px 16px; cursor: pointer; background: #fff; text-align: left; width: 100%; transition: all 0.15s; }
-.qnet-item:hover { border-color: #2563eb; background: #f0f6ff; }
-.qnet-item-title { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
-.qnet-item-meta { font-size: 12px; color: #aaa; margin-top: 4px; }
-.loading-txt { text-align: center; padding: 24px; color: #aaa; font-size: 13px; }
 </style>
 </head>
 <body>
@@ -116,11 +112,6 @@ select:focus { outline: none; border-color: #2563eb; }
     <div class="home-sub">큐넷 공개문제 기반 · 채점·오답·노트 자동 저장</div>
   </div>
   <div style="padding: 0 20px;">
-
-    <div class="section-label">큐넷 공개문제 — 행정사</div>
-    <div id="qnet-list-wrap"><div class="loading-txt">행정사 공개문제 불러오는 중…</div></div>
-
-    <div class="divider"></div>
     <div class="section-label">시험 선택</div>
     <div class="select-wrap">
       <select id="sel-cert">
@@ -133,9 +124,11 @@ select:focus { outline: none; border-color: #2563eb; }
       </select>
     </div>
     <div class="grid2">
-      <div class="select-wrap"><select id="sel-year"><option>2024년</option><option>2023년</option><option>2022년</option></select></div>
+      <div class="select-wrap"><select id="sel-year"><option>2024년</option><option>2023년</option><option>2022년</option><option>2021년</option></select></div>
       <div class="select-wrap"><select id="sel-round"><option>1회</option><option>2회</option><option>3회</option><option>4회</option></select></div>
     </div>
+    <div class="divider"></div>
+    <div class="section-label">풀이 방식</div>
     <div class="mode-grid">
       <button class="mode-card selected" data-mode="순차" onclick="selectMode(this)">
         <i class="ti ti-list-numbers mode-icon" aria-hidden="true"></i>
@@ -149,6 +142,9 @@ select:focus { outline: none; border-color: #2563eb; }
     <button class="btn-primary" onclick="startExam()">
       <i class="ti ti-player-play" aria-hidden="true"></i> 문제 풀이 시작
     </button>
+    <a href="https://www.q-net.or.kr/man001.do?gSite=L&gId=31" target="_blank" class="btn-primary outline-blue" style="text-decoration:none">
+      <i class="ti ti-external-link" aria-hidden="true"></i> 큐넷 행정사 공개문제 보기
+    </a>
     <button class="btn-primary secondary" onclick="showScreen('screen-wrong')">
       <i class="ti ti-bookmarks" aria-hidden="true"></i> 오답 노트 보기
     </button>
@@ -219,9 +215,6 @@ select:focus { outline: none; border-color: #2563eb; }
 
 </div>
 <script>
-const _K = '5bb6eb697917f814dc448fc8bf9fc49461ce534549147f4a642b9afce56d87a2';
-const API = 'https://apis.data.go.kr/B490007/openQst';
-
 const QUESTIONS = [
   {id:1,text:"다음 중 운영체제의 기능으로 옳지 않은 것은?",choices:["프로세스 관리","메모리 관리","응용 프로그램 개발","주변 장치 관리"],answer:2,explain:"운영체제는 프로세스, 메모리, 파일, 주변 장치 관리를 담당하지만, 응용 프로그램 개발은 개발자의 영역입니다."},
   {id:2,text:"CPU의 구성 요소가 아닌 것은?",choices:["제어 장치(CU)","산술논리 연산 장치(ALU)","레지스터","캐시 디스크"],answer:3,explain:"CPU는 CU, ALU, 레지스터로 구성됩니다."},
@@ -248,34 +241,6 @@ function showScreen(id) {
   window.scrollTo(0,0);
   if (id === 'screen-wrong') renderWrongList('all');
 }
-
-async function loadQnet() {
-  const wrap = document.getElementById('qnet-list-wrap');
-  const url = API + '/getOpenQstList?serviceKey=' + encodeURIComponent(_K) + '&numOfRows=20&pageNo=1&dataFormat=json&jmNm=' + encodeURIComponent('행정사');
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    if (data.header && data.header.resultCode === '00' && data.body && data.body.items && data.body.items.length) {
-      const items = data.body.items;
-      wrap.innerHTML = '<div style="font-size:12px;color:#aaa;margin-bottom:8px">총 ' + data.body.totalCount + '건 중 ' + items.length + '건</div>' +
-        '<div class="qnet-list">' + items.map(it =>
-          '<button class="qnet-item" onclick="openQnet(' + it.artlSeq + ')">' +
-          '<div class="qnet-item-title">' + esc(it.title) + '</div>' +
-          '<div class="qnet-item-meta">' + esc(it.jmNm||'행정사') + (it.seriesNm ? ' · ' + esc(it.seriesNm) : '') + '</div>' +
-          '</button>').join('') + '</div>';
-    } else {
-      wrap.innerHTML = '<div class="loading-txt">공개문제가 없습니다.</div>';
-    }
-  } catch(e) {
-    wrap.innerHTML = '<div class="loading-txt" style="color:#dc2626">불러오기 실패. 잠시 후 새로고침해주세요.</div>';
-  }
-}
-
-function openQnet(artlSeq) {
-  window.open('https://www.q-net.or.kr/cst006.do?id=cst00602&gSite=Q&artlSeq=' + artlSeq, '_blank');
-}
-
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function selectMode(el) {
   document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
@@ -429,8 +394,6 @@ function clearWrong() {
   if (!confirm('오답 노트를 모두 초기화할까요?')) return;
   state.wrongList = []; localStorage.setItem('cert_wrong','[]'); renderWrongList('all');
 }
-
-loadQnet();
 </script>
 </body>
 </html>
