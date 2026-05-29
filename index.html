@@ -99,16 +99,20 @@ select:focus { outline: none; border-color: #2563eb; }
 .empty-state { text-align: center; padding: 48px 20px; color: #bbb; font-size: 14px; }
 .empty-icon { font-size: 36px; margin-bottom: 12px; display: block; }
 .divider { height: 1px; background: #f0f0f0; margin: 20px 0; }
-.api-box { background: #f8faff; border: 1.5px solid #dbeafe; border-radius: 14px; padding: 16px; margin-bottom: 16px; }
-.api-box-title { font-size: 13px; font-weight: 600; color: #2563eb; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
-.key-input { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #e8e8e8; font-size: 13px; color: #1a1a1a; background: #fff; margin-bottom: 8px; }
-.key-input:focus { outline: none; border-color: #2563eb; }
-.qnet-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-.qnet-item { border: 1.5px solid #e8e8e8; border-radius: 12px; padding: 12px 14px; cursor: pointer; background: #fff; text-align: left; width: 100%; transition: all 0.15s; }
+.qnet-section { margin-bottom: 4px; }
+.qnet-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.qnet-count { font-size: 12px; color: #aaa; }
+.qnet-list { display: flex; flex-direction: column; gap: 8px; }
+.qnet-item { border: 1.5px solid #e8e8e8; border-radius: 12px; padding: 13px 16px; cursor: pointer; background: #fff; text-align: left; width: 100%; transition: all 0.15s; }
 .qnet-item:hover { border-color: #2563eb; background: #f0f6ff; }
-.qnet-item-title { font-size: 13px; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
-.qnet-item-meta { font-size: 11px; color: #aaa; margin-top: 3px; }
-.loading-txt { text-align: center; padding: 20px; color: #888; font-size: 13px; }
+.qnet-item-title { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
+.qnet-item-meta { font-size: 12px; color: #aaa; margin-top: 4px; }
+.loading-txt { text-align: center; padding: 24px; color: #aaa; font-size: 13px; }
+.search-row { display: flex; gap: 8px; margin-bottom: 10px; }
+.search-input { flex: 1; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #e8e8e8; font-size: 14px; color: #1a1a1a; background: #fff; }
+.search-input:focus { outline: none; border-color: #2563eb; }
+.search-btn { padding: 10px 16px; border-radius: 10px; background: #2563eb; color: #fff; font-size: 14px; font-weight: 600; border: none; cursor: pointer; white-space: nowrap; }
+.search-btn:hover { opacity: 0.9; }
 </style>
 </head>
 <body>
@@ -121,25 +125,17 @@ select:focus { outline: none; border-color: #2563eb; }
   </div>
   <div style="padding: 0 20px;">
 
-    <div class="api-box">
-      <div class="api-box-title"><i class="ti ti-cloud-download" aria-hidden="true"></i> 큐넷 공개문제 불러오기</div>
-      <input class="key-input" id="api-key" placeholder="공공데이터포털 서비스키 입력 (선택)">
-      <div class="grid2" style="margin-bottom:8px">
-        <select id="qnet-qualgb">
-          <option value="T">국가기술자격</option>
-          <option value="C">과정평가형</option>
-          <option value="W">일학습병행</option>
-        </select>
-        <input class="key-input" style="margin:0" id="qnet-jmnm" placeholder="종목명 검색">
+    <div class="qnet-section">
+      <div class="section-label">큐넷 공개문제</div>
+      <div class="search-row">
+        <input class="search-input" id="search-input" placeholder="종목명 검색 (예: 행정사, 전기기사…)" value="행정사">
+        <button class="search-btn" onclick="searchQnet()">검색</button>
       </div>
-      <button class="btn-primary" style="margin-top:0;font-size:14px;padding:12px" onclick="loadQnetList()">
-        <i class="ti ti-download" aria-hidden="true"></i> 목록 불러오기
-      </button>
-      <div id="qnet-list-wrap"></div>
+      <div id="qnet-list-wrap"><div class="loading-txt">불러오는 중…</div></div>
     </div>
 
     <div class="divider"></div>
-    <div class="section-label">시험 선택</div>
+    <div class="section-label">샘플 문제</div>
     <div class="select-wrap">
       <select id="sel-cert">
         <option>정보처리기능사</option><option>정보처리산업기사</option>
@@ -150,9 +146,6 @@ select:focus { outline: none; border-color: #2563eb; }
       <div class="select-wrap"><select id="sel-year"><option>2024년</option><option>2023년</option><option>2022년</option></select></div>
       <div class="select-wrap"><select id="sel-round"><option>1회</option><option>2회</option><option>3회</option><option>4회</option></select></div>
     </div>
-
-    <div class="divider"></div>
-    <div class="section-label">풀이 방식</div>
     <div class="mode-grid">
       <button class="mode-card selected" data-mode="순차" onclick="selectMode(this)">
         <i class="ti ti-list-numbers mode-icon" aria-hidden="true"></i>
@@ -164,7 +157,7 @@ select:focus { outline: none; border-color: #2563eb; }
       </button>
     </div>
     <button class="btn-primary" onclick="startExam()">
-      <i class="ti ti-player-play" aria-hidden="true"></i> 문제 풀이 시작
+      <i class="ti ti-player-play" aria-hidden="true"></i> 샘플 문제 풀기
     </button>
     <button class="btn-primary secondary" onclick="showScreen('screen-wrong')">
       <i class="ti ti-bookmarks" aria-hidden="true"></i> 오답 노트 보기
@@ -236,27 +229,27 @@ select:focus { outline: none; border-color: #2563eb; }
 
 </div>
 <script>
-const SERVICE_KEY = '5bb6eb697917f814dc448fc8bf9fc49461ce534549147f4a642b9afce56d87a2';
-const API_BASE = 'https://apis.data.go.kr/B490007/openQst';
+const _K = '5bb6eb697917f814dc448fc8bf9fc49461ce534549147f4a642b9afce56d87a2';
+const API = 'https://apis.data.go.kr/B490007/openQst';
 
 const QUESTIONS = [
-  {id:1,text:"다음 중 운영체제의 기능으로 옳지 않은 것은?",choices:["프로세스 관리","메모리 관리","응용 프로그램 개발","주변 장치 관리"],answer:2,explain:"운영체제는 프로세스, 메모리, 파일, 주변 장치 관리를 담당하지만, 응용 프로그램 개발은 개발자의 영역으로 OS의 직접 기능이 아닙니다."},
-  {id:2,text:"CPU의 구성 요소가 아닌 것은?",choices:["제어 장치(CU)","산술논리 연산 장치(ALU)","레지스터","캐시 디스크"],answer:3,explain:"CPU는 CU, ALU, 레지스터로 구성됩니다. '캐시 디스크'라는 용어는 없으며, 캐시 메모리와 디스크를 혼동하지 않도록 주의하세요."},
-  {id:3,text:"OSI 7계층에서 데이터 링크 계층(Layer 2)의 역할은?",choices:["경로 설정","동일 네트워크 내 노드 간 신뢰성 있는 전송","응용 프로그램 서비스 제공","암호화 및 복호화"],answer:1,explain:"데이터 링크 계층은 같은 네트워크 세그먼트 내에서 노드 간 오류 없는 데이터 전달을 담당합니다. 경로 설정은 3계층의 역할입니다."},
-  {id:4,text:"관계형 데이터베이스에서 기본 키(Primary Key)의 특성으로 옳지 않은 것은?",choices:["유일성 — 중복 값이 없어야 한다","최소성 — 꼭 필요한 속성만 포함한다","NULL 허용 — 값이 없을 수 있다","개체 무결성 보장"],answer:2,explain:"기본 키는 NULL을 허용하지 않습니다. 기본 키의 핵심 조건은 유일성과 NOT NULL입니다."},
-  {id:5,text:"애자일(Agile) 개발 방법론의 특징으로 옳은 것은?",choices:["사전에 완전한 요구사항 정의 필요","짧은 반복 주기(스프린트)로 개발","문서 작성을 최우선으로 한다","변경에 소극적으로 대응한다"],answer:1,explain:"애자일은 짧은 반복 주기로 점진적으로 개발하며, 변화에 유연하게 대응하는 방법론입니다."},
-  {id:6,text:"다음 C언어 코드의 출력 결과는?\n\nint a = 10, b = 3;\nprintf(\"%d\", a % b);",choices:["0","1","3","10"],answer:1,explain:"% 연산자는 나머지를 구합니다. 10 ÷ 3 = 3 나머지 1이므로 출력은 1입니다."},
-  {id:7,text:"IPv4 주소 체계에서 클래스 C의 범위로 옳은 것은?",choices:["0.0.0.0 ~ 127.255.255.255","128.0.0.0 ~ 191.255.255.255","192.0.0.0 ~ 223.255.255.255","224.0.0.0 ~ 239.255.255.255"],answer:2,explain:"IPv4 클래스 C는 첫 번째 옥텟이 192~223인 주소 범위입니다."},
-  {id:8,text:"정규화(Normalization)의 목적으로 옳지 않은 것은?",choices:["데이터 중복 제거","이상(Anomaly) 현상 방지","쿼리 속도 항상 향상","데이터 무결성 보장"],answer:2,explain:"정규화는 중복 제거와 이상 현상 방지가 목적이지만, 테이블 분리로 조인이 늘어 속도가 느려질 수 있습니다."},
-  {id:9,text:"프로세스 스케줄링 중 선점형(Preemptive)에 해당하는 것은?",choices:["FCFS(First Come First Served)","SJF(Shortest Job First) 비선점","Round Robin","비선점 우선순위"],answer:2,explain:"Round Robin은 대표적인 선점형 스케줄링으로, 타임슬라이스 초과 시 강제로 CPU를 빼앗습니다."},
-  {id:10,text:"해싱(Hashing)에 대한 설명으로 옳은 것은?",choices:["항상 O(n) 검색 시간을 보장한다","충돌(Collision)이 발생할 수 있다","정렬된 데이터에서만 사용 가능하다","트리 구조로 데이터를 저장한다"],answer:1,explain:"해싱은 평균 O(1)의 검색 속도를 제공하지만, 충돌(Collision)이 발생할 수 있습니다."}
+  {id:1,text:"다음 중 운영체제의 기능으로 옳지 않은 것은?",choices:["프로세스 관리","메모리 관리","응용 프로그램 개발","주변 장치 관리"],answer:2,explain:"운영체제는 프로세스, 메모리, 파일, 주변 장치 관리를 담당하지만, 응용 프로그램 개발은 개발자의 영역입니다."},
+  {id:2,text:"CPU의 구성 요소가 아닌 것은?",choices:["제어 장치(CU)","산술논리 연산 장치(ALU)","레지스터","캐시 디스크"],answer:3,explain:"CPU는 CU, ALU, 레지스터로 구성됩니다."},
+  {id:3,text:"OSI 7계층에서 데이터 링크 계층(Layer 2)의 역할은?",choices:["경로 설정","동일 네트워크 내 노드 간 신뢰성 있는 전송","응용 프로그램 서비스 제공","암호화 및 복호화"],answer:1,explain:"데이터 링크 계층은 같은 네트워크 세그먼트 내에서 오류 없는 데이터 전달을 담당합니다."},
+  {id:4,text:"관계형 데이터베이스에서 기본 키(Primary Key)의 특성으로 옳지 않은 것은?",choices:["유일성 — 중복 값이 없어야 한다","최소성 — 꼭 필요한 속성만 포함한다","NULL 허용 — 값이 없을 수 있다","개체 무결성 보장"],answer:2,explain:"기본 키는 NULL을 허용하지 않습니다."},
+  {id:5,text:"애자일(Agile) 개발 방법론의 특징으로 옳은 것은?",choices:["사전에 완전한 요구사항 정의 필요","짧은 반복 주기(스프린트)로 개발","문서 작성을 최우선으로 한다","변경에 소극적으로 대응한다"],answer:1,explain:"애자일은 짧은 반복 주기로 점진적으로 개발하며 변화에 유연하게 대응합니다."},
+  {id:6,text:"다음 C언어 코드의 출력 결과는?\n\nint a = 10, b = 3;\nprintf(\"%d\", a % b);",choices:["0","1","3","10"],answer:1,explain:"10 ÷ 3 = 3 나머지 1이므로 출력은 1입니다."},
+  {id:7,text:"IPv4 클래스 C의 주소 범위로 옳은 것은?",choices:["0.0.0.0 ~ 127.255.255.255","128.0.0.0 ~ 191.255.255.255","192.0.0.0 ~ 223.255.255.255","224.0.0.0 ~ 239.255.255.255"],answer:2,explain:"IPv4 클래스 C는 첫 번째 옥텟이 192~223입니다."},
+  {id:8,text:"정규화(Normalization)의 목적으로 옳지 않은 것은?",choices:["데이터 중복 제거","이상(Anomaly) 현상 방지","쿼리 속도 항상 향상","데이터 무결성 보장"],answer:2,explain:"정규화로 테이블이 분리되면 조인이 늘어 오히려 속도가 느려질 수 있습니다."},
+  {id:9,text:"프로세스 스케줄링 중 선점형(Preemptive)에 해당하는 것은?",choices:["FCFS","SJF 비선점","Round Robin","비선점 우선순위"],answer:2,explain:"Round Robin은 대표적인 선점형 스케줄링입니다."},
+  {id:10,text:"해싱(Hashing)에 대한 설명으로 옳은 것은?",choices:["항상 O(n) 검색 시간을 보장한다","충돌(Collision)이 발생할 수 있다","정렬된 데이터에서만 사용 가능하다","트리 구조로 데이터를 저장한다"],answer:1,explain:"해싱은 평균 O(1) 속도를 제공하지만 충돌이 발생할 수 있습니다."}
 ];
 
 let state = {
-  questions: [], current: 0, answered: {},
+  questions:[], current:0, answered:{},
   memos: JSON.parse(localStorage.getItem('cert_memos')||'{}'),
   wrongList: JSON.parse(localStorage.getItem('cert_wrong')||'[]'),
-  mode: '순차', cert: '정보처리기능사', year: '2024년', round: '1회'
+  mode:'순차', cert:'정보처리기능사', year:'2024년', round:'1회'
 };
 
 function showScreen(id) {
@@ -266,61 +259,54 @@ function showScreen(id) {
   if (id === 'screen-wrong') renderWrongList('all');
 }
 
-function selectMode(el) {
-  document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  state.mode = el.dataset.mode;
-}
-
-async function loadQnetList() {
-  const key = (document.getElementById('api-key').value || SERVICE_KEY).trim();
-  const qualgb = document.getElementById('qnet-qualgb').value;
-  const jmnm = document.getElementById('qnet-jmnm').value.trim();
+async function searchQnet() {
+  const jmnm = document.getElementById('search-input').value.trim();
   const wrap = document.getElementById('qnet-list-wrap');
-  wrap.innerHTML = '<div class="loading-txt">불러오는 중...</div>';
-  let url = API_BASE + '/getOpenQstList?serviceKey=' + encodeURIComponent(key) + '&numOfRows=20&pageNo=1&dataFormat=json&qualgbCd=' + qualgb;
-  if (jmnm) url += '&jmNm=' + encodeURIComponent(jmnm);
+  wrap.innerHTML = '<div class="loading-txt">불러오는 중…</div>';
+  const url = API + '/getOpenQstList?serviceKey=' + encodeURIComponent(_K) + '&numOfRows=20&pageNo=1&dataFormat=json&qualgbCd=T' + (jmnm ? '&jmNm=' + encodeURIComponent(jmnm) : '');
   try {
     const res = await fetch(url);
     const data = await res.json();
-    if (data.header && data.header.resultCode === '00' && data.body && data.body.items) {
+    if (data.header && data.header.resultCode === '00' && data.body && data.body.items && data.body.items.length) {
       const items = data.body.items;
-      if (!items.length) { wrap.innerHTML = '<div class="loading-txt">검색 결과가 없습니다.</div>'; return; }
-      wrap.innerHTML = '<div style="font-size:12px;color:#888;margin:8px 0">총 ' + data.body.totalCount + '건 중 ' + items.length + '건</div><div class="qnet-list">' +
-        items.map(it => '<button class="qnet-item" onclick="openQnet(' + it.artlSeq + ')">' +
+      wrap.innerHTML = '<div class="qnet-count" style="margin-bottom:8px">총 ' + data.body.totalCount + '건 중 ' + items.length + '건 표시</div>' +
+        '<div class="qnet-list">' + items.map(it =>
+          '<button class="qnet-item" onclick="openQnet(' + it.artlSeq + ')">' +
           '<div class="qnet-item-title">' + esc(it.title) + '</div>' +
-          '<div class="qnet-item-meta">' + (it.jmNm||'종목 미분류') + (it.seriesNm?' · '+it.seriesNm:'') + '</div>' +
+          '<div class="qnet-item-meta">' + esc(it.jmNm||'종목 미분류') + (it.seriesNm ? ' · ' + esc(it.seriesNm) : '') + '</div>' +
           '</button>').join('') + '</div>';
     } else {
-      wrap.innerHTML = '<div style="color:#dc2626;font-size:13px;padding:12px 0">오류: ' + (data.header ? data.header.resultMsg : '응답 오류') + '</div>';
+      wrap.innerHTML = '<div class="loading-txt">검색 결과가 없습니다.</div>';
     }
   } catch(e) {
-    wrap.innerHTML = '<div style="color:#dc2626;font-size:13px;padding:12px 0">네트워크 오류. CORS 제한일 수 있습니다.</div>';
+    wrap.innerHTML = '<div class="loading-txt" style="color:#dc2626">불러오기 실패. 잠시 후 다시 시도해주세요.</div>';
   }
 }
 
 function openQnet(artlSeq) {
-  window.open('https://www.q-net.or.kr/cst012.do?id=cst01201&gSite=Q', '_blank');
+  window.open('https://www.q-net.or.kr/cst012.do?id=cst01201&gSite=Q&artlSeq=' + artlSeq, '_blank');
 }
 
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function selectMode(el) {
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected'); state.mode = el.dataset.mode;
+}
 
 function startExam() {
   state.cert = document.getElementById('sel-cert').value;
   state.year = document.getElementById('sel-year').value;
   state.round = document.getElementById('sel-round').value;
-  state.questions = state.mode === '랜덤'
-    ? [...QUESTIONS].sort(() => Math.random() - 0.5) : [...QUESTIONS];
+  state.questions = state.mode === '랜덤' ? [...QUESTIONS].sort(() => Math.random() - 0.5) : [...QUESTIONS];
   state.current = 0; state.answered = {};
   document.getElementById('exam-title').textContent = state.cert;
   document.getElementById('exam-badge').textContent = state.year + ' ' + state.round;
-  showScreen('screen-exam');
-  renderQuestion();
+  showScreen('screen-exam'); renderQuestion();
 }
 
 function renderQuestion() {
-  const q = state.questions[state.current];
-  const total = state.questions.length;
+  const q = state.questions[state.current], total = state.questions.length;
   const done = Object.keys(state.answered).length;
   document.getElementById('q-counter').textContent = (state.current+1) + ' / ' + total;
   document.getElementById('q-pct').textContent = Math.round(done/total*100) + '%';
@@ -338,8 +324,7 @@ function renderQuestion() {
   });
   const exp = document.getElementById('explain-box');
   exp.className = 'explain-box'; exp.textContent = '';
-  const memoKey = state.cert+'_'+q.id;
-  document.getElementById('memo-input').value = state.memos[memoKey] || '';
+  document.getElementById('memo-input').value = state.memos[state.cert+'_'+q.id] || '';
   document.getElementById('memo-saved').style.opacity = '0';
   document.getElementById('btn-prev').disabled = state.current === 0;
   document.getElementById('btn-next').textContent = state.current === total-1 ? '채점하기 ✓' : '다음 →';
@@ -350,8 +335,7 @@ function answer(idx) {
   if (state.answered[state.current] !== undefined) return;
   const q = state.questions[state.current];
   state.answered[state.current] = idx;
-  const btns = document.querySelectorAll('.choice-btn');
-  btns.forEach((b,i) => {
+  document.querySelectorAll('.choice-btn').forEach((b,i) => {
     b.disabled = true;
     if (i === q.answer) b.classList.add('correct');
     else if (i === idx && idx !== q.answer) b.classList.add('wrong');
@@ -360,8 +344,7 @@ function answer(idx) {
   exp.textContent = (idx === q.answer ? '✓ 정답입니다! ' : '✗ 오답입니다. ') + q.explain;
   exp.className = 'explain-box show ' + (idx === q.answer ? 'correct-exp' : 'wrong-exp');
   if (idx !== q.answer) {
-    const exists = state.wrongList.find(w => w.qid === q.id && w.cert === state.cert);
-    if (!exists) {
+    if (!state.wrongList.find(w => w.qid === q.id && w.cert === state.cert)) {
       state.wrongList.push({qid:q.id,cert:state.cert,year:state.year,round:state.round,text:q.text,userAns:idx,correctAns:q.answer,choices:q.choices});
       localStorage.setItem('cert_wrong', JSON.stringify(state.wrongList));
     }
@@ -409,11 +392,11 @@ function showResult() {
   const correct = state.questions.filter((q,i) => state.answered[i] === q.answer).length;
   const wrong = total - correct, pct = Math.round(correct/total*100), pass = pct >= 60;
   const scoreEl = document.getElementById('result-score');
-  scoreEl.textContent = pct + '%'; scoreEl.className = 'result-score ' + (pass ? 'pass' : 'fail');
+  scoreEl.textContent = pct + '%'; scoreEl.className = 'result-score ' + (pass?'pass':'fail');
   document.getElementById('result-label').textContent = correct + '개 정답 / ' + total + '문제';
   const badge = document.getElementById('result-badge');
   badge.textContent = pass ? '🎉 합격 기준 달성!' : '😅 조금 더 공부해봐요';
-  badge.className = 'result-badge ' + (pass ? 'pass' : 'fail');
+  badge.className = 'result-badge ' + (pass?'pass':'fail');
   document.getElementById('stat-grid').innerHTML =
     '<div class="stat-card"><span class="stat-val green">'+correct+'</span><span class="stat-lbl">정답</span></div>'+
     '<div class="stat-card"><span class="stat-val red">'+wrong+'</span><span class="stat-lbl">오답</span></div>'+
@@ -458,6 +441,8 @@ function clearWrong() {
   if (!confirm('오답 노트를 모두 초기화할까요?')) return;
   state.wrongList = []; localStorage.setItem('cert_wrong','[]'); renderWrongList('all');
 }
+
+searchQnet();
 </script>
 </body>
 </html>
