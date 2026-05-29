@@ -99,20 +99,12 @@ select:focus { outline: none; border-color: #2563eb; }
 .empty-state { text-align: center; padding: 48px 20px; color: #bbb; font-size: 14px; }
 .empty-icon { font-size: 36px; margin-bottom: 12px; display: block; }
 .divider { height: 1px; background: #f0f0f0; margin: 20px 0; }
-.qnet-section { margin-bottom: 4px; }
-.qnet-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.qnet-count { font-size: 12px; color: #aaa; }
 .qnet-list { display: flex; flex-direction: column; gap: 8px; }
 .qnet-item { border: 1.5px solid #e8e8e8; border-radius: 12px; padding: 13px 16px; cursor: pointer; background: #fff; text-align: left; width: 100%; transition: all 0.15s; }
 .qnet-item:hover { border-color: #2563eb; background: #f0f6ff; }
 .qnet-item-title { font-size: 14px; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
 .qnet-item-meta { font-size: 12px; color: #aaa; margin-top: 4px; }
 .loading-txt { text-align: center; padding: 24px; color: #aaa; font-size: 13px; }
-.search-row { display: flex; gap: 8px; margin-bottom: 10px; }
-.search-input { flex: 1; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #e8e8e8; font-size: 14px; color: #1a1a1a; background: #fff; }
-.search-input:focus { outline: none; border-color: #2563eb; }
-.search-btn { padding: 10px 16px; border-radius: 10px; background: #2563eb; color: #fff; font-size: 14px; font-weight: 600; border: none; cursor: pointer; white-space: nowrap; }
-.search-btn:hover { opacity: 0.9; }
 </style>
 </head>
 <body>
@@ -125,21 +117,19 @@ select:focus { outline: none; border-color: #2563eb; }
   </div>
   <div style="padding: 0 20px;">
 
-    <div class="qnet-section">
-      <div class="section-label">큐넷 공개문제</div>
-      <div class="search-row">
-        <input class="search-input" id="search-input" placeholder="종목명 검색 (예: 행정사, 전기기사…)" value="행정사">
-        <button class="search-btn" onclick="searchQnet()">검색</button>
-      </div>
-      <div id="qnet-list-wrap"><div class="loading-txt">불러오는 중…</div></div>
-    </div>
+    <div class="section-label">큐넷 공개문제 — 행정사</div>
+    <div id="qnet-list-wrap"><div class="loading-txt">행정사 공개문제 불러오는 중…</div></div>
 
     <div class="divider"></div>
-    <div class="section-label">샘플 문제</div>
+    <div class="section-label">시험 선택</div>
     <div class="select-wrap">
       <select id="sel-cert">
-        <option>정보처리기능사</option><option>정보처리산업기사</option>
-        <option>컴퓨터활용능력 1급</option><option>산업안전기사</option><option>전기기사</option>
+        <option>행정사</option>
+        <option>정보처리기능사</option>
+        <option>정보처리산업기사</option>
+        <option>컴퓨터활용능력 1급</option>
+        <option>산업안전기사</option>
+        <option>전기기사</option>
       </select>
     </div>
     <div class="grid2">
@@ -157,7 +147,7 @@ select:focus { outline: none; border-color: #2563eb; }
       </button>
     </div>
     <button class="btn-primary" onclick="startExam()">
-      <i class="ti ti-player-play" aria-hidden="true"></i> 샘플 문제 풀기
+      <i class="ti ti-player-play" aria-hidden="true"></i> 문제 풀이 시작
     </button>
     <button class="btn-primary secondary" onclick="showScreen('screen-wrong')">
       <i class="ti ti-bookmarks" aria-hidden="true"></i> 오답 노트 보기
@@ -168,8 +158,8 @@ select:focus { outline: none; border-color: #2563eb; }
 <div id="screen-exam" class="screen">
   <div class="header">
     <button class="header-back" onclick="confirmBack()" aria-label="홈으로"><i class="ti ti-chevron-left" style="font-size:22px"></i></button>
-    <span class="header-title" id="exam-title">정보처리기능사</span>
-    <span class="header-badge" id="exam-badge">1회</span>
+    <span class="header-title" id="exam-title">행정사</span>
+    <span class="header-badge" id="exam-badge">2024년 1회</span>
   </div>
   <div class="progress-wrap">
     <div class="progress-top"><span class="progress-num" id="q-counter">1 / 10</span><span class="progress-pct" id="q-pct">0%</span></div>
@@ -249,7 +239,7 @@ let state = {
   questions:[], current:0, answered:{},
   memos: JSON.parse(localStorage.getItem('cert_memos')||'{}'),
   wrongList: JSON.parse(localStorage.getItem('cert_wrong')||'[]'),
-  mode:'순차', cert:'정보처리기능사', year:'2024년', round:'1회'
+  mode:'순차', cert:'행정사', year:'2024년', round:'1회'
 };
 
 function showScreen(id) {
@@ -259,32 +249,30 @@ function showScreen(id) {
   if (id === 'screen-wrong') renderWrongList('all');
 }
 
-async function searchQnet() {
-  const jmnm = document.getElementById('search-input').value.trim();
+async function loadQnet() {
   const wrap = document.getElementById('qnet-list-wrap');
-  wrap.innerHTML = '<div class="loading-txt">불러오는 중…</div>';
-  const url = API + '/getOpenQstList?serviceKey=' + encodeURIComponent(_K) + '&numOfRows=20&pageNo=1&dataFormat=json&qualgbCd=T' + (jmnm ? '&jmNm=' + encodeURIComponent(jmnm) : '');
+  const url = API + '/getOpenQstList?serviceKey=' + encodeURIComponent(_K) + '&numOfRows=20&pageNo=1&dataFormat=json&jmNm=' + encodeURIComponent('행정사');
   try {
     const res = await fetch(url);
     const data = await res.json();
     if (data.header && data.header.resultCode === '00' && data.body && data.body.items && data.body.items.length) {
       const items = data.body.items;
-      wrap.innerHTML = '<div class="qnet-count" style="margin-bottom:8px">총 ' + data.body.totalCount + '건 중 ' + items.length + '건 표시</div>' +
+      wrap.innerHTML = '<div style="font-size:12px;color:#aaa;margin-bottom:8px">총 ' + data.body.totalCount + '건 중 ' + items.length + '건</div>' +
         '<div class="qnet-list">' + items.map(it =>
           '<button class="qnet-item" onclick="openQnet(' + it.artlSeq + ')">' +
           '<div class="qnet-item-title">' + esc(it.title) + '</div>' +
-          '<div class="qnet-item-meta">' + esc(it.jmNm||'종목 미분류') + (it.seriesNm ? ' · ' + esc(it.seriesNm) : '') + '</div>' +
+          '<div class="qnet-item-meta">' + esc(it.jmNm||'행정사') + (it.seriesNm ? ' · ' + esc(it.seriesNm) : '') + '</div>' +
           '</button>').join('') + '</div>';
     } else {
-      wrap.innerHTML = '<div class="loading-txt">검색 결과가 없습니다.</div>';
+      wrap.innerHTML = '<div class="loading-txt">공개문제가 없습니다.</div>';
     }
   } catch(e) {
-    wrap.innerHTML = '<div class="loading-txt" style="color:#dc2626">불러오기 실패. 잠시 후 다시 시도해주세요.</div>';
+    wrap.innerHTML = '<div class="loading-txt" style="color:#dc2626">불러오기 실패. 잠시 후 새로고침해주세요.</div>';
   }
 }
 
 function openQnet(artlSeq) {
-  window.open('https://www.q-net.or.kr/cst012.do?id=cst01201&gSite=Q&artlSeq=' + artlSeq, '_blank');
+  window.open('https://www.q-net.or.kr/cst006.do?id=cst00602&gSite=Q&artlSeq=' + artlSeq, '_blank');
 }
 
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -442,7 +430,7 @@ function clearWrong() {
   state.wrongList = []; localStorage.setItem('cert_wrong','[]'); renderWrongList('all');
 }
 
-searchQnet();
+loadQnet();
 </script>
 </body>
 </html>
