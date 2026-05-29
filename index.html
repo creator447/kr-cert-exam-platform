@@ -9,92 +9,46 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans KR', sans-serif; background: #f5f5f5; color: #1a1a1a; }
 #app { max-width: 480px; margin: 0 auto; background: #fff; min-height: 100vh; padding: 0 0 40px; }
-
 .screen { display: none; padding: 0 20px; }
 .screen.active { display: block; }
-
-.header {
-  display: flex; align-items: center; gap: 10px;
-  padding: 16px 20px; border-bottom: 1px solid #f0f0f0;
-  position: sticky; top: 0; background: #fff; z-index: 10;
-}
-.header-back {
-  background: none; border: none; cursor: pointer;
-  color: #888; padding: 4px; border-radius: 8px; display: flex;
-}
+.header { display: flex; align-items: center; gap: 10px; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; background: #fff; z-index: 10; }
+.header-back { background: none; border: none; cursor: pointer; color: #888; padding: 4px; border-radius: 8px; display: flex; }
 .header-back:hover { background: #f5f5f5; }
 .header-title { font-size: 16px; font-weight: 600; flex: 1; }
-.header-badge {
-  font-size: 12px; padding: 4px 10px; border-radius: 20px;
-  background: #f0f0f0; color: #666;
-}
-
+.header-badge { font-size: 12px; padding: 4px 10px; border-radius: 20px; background: #f0f0f0; color: #666; }
 .home-hero { padding: 32px 20px 24px; }
 .home-title { font-size: 24px; font-weight: 700; line-height: 1.3; margin-bottom: 8px; }
 .home-title span { color: #2563eb; }
 .home-sub { font-size: 14px; color: #888; line-height: 1.6; }
-
 .section-label { font-size: 12px; font-weight: 600; color: #888; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 10px; }
-
 .select-wrap { margin-bottom: 12px; }
-select {
-  width: 100%; padding: 12px 14px; border-radius: 12px;
-  border: 1.5px solid #e8e8e8; font-size: 14px;
-  background: #fff; color: #1a1a1a; cursor: pointer; appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 14px center;
-}
+select { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1.5px solid #e8e8e8; font-size: 14px; background: #fff; color: #1a1a1a; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; }
 select:focus { outline: none; border-color: #2563eb; }
-
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
 .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 16px 0; }
-.mode-card {
-  border: 1.5px solid #e8e8e8; border-radius: 14px; padding: 16px 14px;
-  cursor: pointer; background: #fff; text-align: left; transition: all 0.15s;
-}
+.mode-card { border: 1.5px solid #e8e8e8; border-radius: 14px; padding: 16px 14px; cursor: pointer; background: #fff; text-align: left; transition: all 0.15s; }
 .mode-card:hover { border-color: #2563eb; background: #f0f6ff; }
 .mode-card.selected { border-color: #2563eb; background: #eff6ff; }
 .mode-icon { font-size: 22px; color: #aaa; margin-bottom: 8px; display: block; }
 .mode-card.selected .mode-icon { color: #2563eb; }
 .mode-name { font-size: 14px; font-weight: 600; color: #1a1a1a; display: block; }
 .mode-desc { font-size: 12px; color: #999; margin-top: 2px; display: block; }
-
-.btn-primary {
-  width: 100%; padding: 15px; border-radius: 14px;
-  background: #2563eb; color: #fff; font-size: 16px; font-weight: 600;
-  border: none; cursor: pointer; margin-top: 8px; transition: opacity 0.15s;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-}
+.btn-primary { width: 100%; padding: 15px; border-radius: 14px; background: #2563eb; color: #fff; font-size: 16px; font-weight: 600; border: none; cursor: pointer; margin-top: 8px; transition: opacity 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-primary:hover { opacity: 0.9; }
 .btn-primary:active { transform: scale(0.99); }
-.btn-primary.secondary {
-  background: #fff; color: #1a1a1a; border: 1.5px solid #e8e8e8; margin-top: 10px;
-}
+.btn-primary.secondary { background: #fff; color: #1a1a1a; border: 1.5px solid #e8e8e8; margin-top: 10px; }
 .btn-primary.secondary:hover { background: #f5f5f5; opacity: 1; }
-
 .progress-wrap { padding: 16px 20px 0; }
 .progress-top { display: flex; justify-content: space-between; margin-bottom: 8px; }
 .progress-num { font-size: 13px; color: #888; }
 .progress-pct { font-size: 13px; font-weight: 600; color: #2563eb; }
 .progress-bar { height: 5px; background: #f0f0f0; border-radius: 5px; overflow: hidden; }
 .progress-fill { height: 100%; background: #2563eb; border-radius: 5px; transition: width 0.4s ease; }
-
-.q-card {
-  background: #fff; border: 1.5px solid #f0f0f0;
-  border-radius: 16px; padding: 20px; margin: 16px 0 12px;
-}
+.q-card { background: #fff; border: 1.5px solid #f0f0f0; border-radius: 16px; padding: 20px; margin: 16px 0 12px; }
 .q-num { font-size: 12px; color: #2563eb; font-weight: 600; margin-bottom: 10px; }
 .q-text { font-size: 15px; color: #1a1a1a; line-height: 1.7; white-space: pre-line; }
-
 .choices { display: flex; flex-direction: column; gap: 9px; margin-bottom: 12px; }
-.choice-btn {
-  width: 100%; text-align: left; padding: 13px 16px;
-  border-radius: 12px; border: 1.5px solid #e8e8e8;
-  background: #fff; cursor: pointer; font-size: 14px;
-  color: #1a1a1a; line-height: 1.5; transition: all 0.15s;
-  display: flex; align-items: flex-start; gap: 10px;
-}
+.choice-btn { width: 100%; text-align: left; padding: 13px 16px; border-radius: 12px; border: 1.5px solid #e8e8e8; background: #fff; cursor: pointer; font-size: 14px; color: #1a1a1a; line-height: 1.5; transition: all 0.15s; display: flex; align-items: flex-start; gap: 10px; }
 .choice-btn:hover:not(:disabled) { border-color: #2563eb; background: #f0f6ff; }
 .choice-label { font-weight: 700; color: #aaa; min-width: 20px; }
 .choice-btn.correct { border-color: #16a34a; background: #f0fdf4; }
@@ -102,122 +56,99 @@ select:focus { outline: none; border-color: #2563eb; }
 .choice-btn.wrong { border-color: #dc2626; background: #fef2f2; }
 .choice-btn.wrong .choice-label { color: #dc2626; }
 .choice-btn:disabled { cursor: default; }
-
-.explain-box {
-  border-radius: 12px; padding: 14px 16px;
-  font-size: 13px; line-height: 1.7; margin-bottom: 12px; display: none;
-}
+.explain-box { border-radius: 12px; padding: 14px 16px; font-size: 13px; line-height: 1.7; margin-bottom: 12px; display: none; }
 .explain-box.show { display: block; }
 .explain-box.correct-exp { background: #f0fdf4; color: #15803d; border-left: 3px solid #16a34a; }
 .explain-box.wrong-exp { background: #fef2f2; color: #b91c1c; border-left: 3px solid #dc2626; }
-
 .nav-row { display: flex; gap: 8px; }
-.nav-btn {
-  flex: 1; padding: 13px; border-radius: 12px; font-size: 14px; font-weight: 600;
-  border: 1.5px solid #e8e8e8; background: #fff; cursor: pointer; transition: all 0.15s;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-}
+.nav-btn { flex: 1; padding: 13px; border-radius: 12px; font-size: 14px; font-weight: 600; border: 1.5px solid #e8e8e8; background: #fff; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 6px; }
 .nav-btn:hover { background: #f5f5f5; }
 .nav-btn:disabled { opacity: 0.35; cursor: default; }
 .nav-btn.next { background: #2563eb; color: #fff; border-color: #2563eb; flex: 2; }
 .nav-btn.next:hover { opacity: 0.9; background: #2563eb; }
-
 .memo-section { margin: 12px 0; }
 .memo-label { font-size: 12px; color: #888; margin-bottom: 6px; display: block; }
-.memo-area {
-  width: 100%; min-height: 72px; padding: 11px 14px; font-size: 13px;
-  border-radius: 12px; border: 1.5px solid #e8e8e8;
-  background: #fff; color: #1a1a1a; resize: vertical;
-  font-family: inherit; line-height: 1.6;
-}
+.memo-area { width: 100%; min-height: 72px; padding: 11px 14px; font-size: 13px; border-radius: 12px; border: 1.5px solid #e8e8e8; background: #fff; color: #1a1a1a; resize: vertical; font-family: inherit; line-height: 1.6; }
 .memo-area:focus { outline: none; border-color: #2563eb; }
 .memo-row { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
-.memo-save {
-  font-size: 12px; padding: 6px 14px; border-radius: 8px;
-  background: #fff; border: 1.5px solid #e8e8e8;
-  color: #666; cursor: pointer;
-}
+.memo-save { font-size: 12px; padding: 6px 14px; border-radius: 8px; background: #fff; border: 1.5px solid #e8e8e8; color: #666; cursor: pointer; }
 .memo-save:hover { background: #f5f5f5; }
 .memo-saved { color: #16a34a; font-size: 12px; opacity: 0; transition: opacity 0.3s; }
-
 .result-hero { text-align: center; padding: 28px 20px 20px; }
 .result-score { font-size: 56px; font-weight: 700; line-height: 1; }
 .result-score.pass { color: #2563eb; }
 .result-score.fail { color: #dc2626; }
 .result-label { font-size: 14px; color: #888; margin-top: 6px; }
-.result-badge {
-  display: inline-block; margin-top: 12px; padding: 6px 16px;
-  border-radius: 20px; font-size: 13px; font-weight: 600;
-}
+.result-badge { display: inline-block; margin-top: 12px; padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; }
 .result-badge.pass { background: #eff6ff; color: #2563eb; }
 .result-badge.fail { background: #fef2f2; color: #dc2626; }
-
 .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 16px 0; }
 .stat-card { background: #f8f8f8; border-radius: 12px; padding: 14px; text-align: center; }
 .stat-val { font-size: 22px; font-weight: 700; display: block; }
 .stat-val.green { color: #16a34a; }
 .stat-val.red { color: #dc2626; }
 .stat-lbl { font-size: 11px; color: #999; margin-top: 2px; display: block; }
-
-.wrong-item {
-  border: 1.5px solid #f0f0f0; border-radius: 14px;
-  padding: 14px 16px; margin-bottom: 10px;
-  background: #fff; cursor: pointer; transition: border-color 0.15s;
-}
+.wrong-item { border: 1.5px solid #f0f0f0; border-radius: 14px; padding: 14px 16px; margin-bottom: 10px; background: #fff; cursor: pointer; transition: border-color 0.15s; }
 .wrong-item:hover { border-color: #2563eb; }
 .wrong-q { font-size: 14px; color: #1a1a1a; line-height: 1.5; }
 .wrong-meta { font-size: 12px; color: #aaa; margin-top: 5px; }
 .wrong-memo { font-size: 12px; color: #d97706; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
-
-.tab-bar {
-  display: flex; gap: 4px; padding: 4px;
-  background: #f5f5f5; border-radius: 12px; margin-bottom: 16px;
-}
-.tab {
-  flex: 1; padding: 8px 4px; text-align: center; font-size: 13px; font-weight: 500;
-  border-radius: 9px; cursor: pointer; background: none; border: none; color: #888;
-  transition: all 0.15s;
-}
+.tab-bar { display: flex; gap: 4px; padding: 4px; background: #f5f5f5; border-radius: 12px; margin-bottom: 16px; }
+.tab { flex: 1; padding: 8px 4px; text-align: center; font-size: 13px; font-weight: 500; border-radius: 9px; cursor: pointer; background: none; border: none; color: #888; transition: all 0.15s; }
 .tab.active { background: #fff; color: #1a1a1a; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-
 .empty-state { text-align: center; padding: 48px 20px; color: #bbb; font-size: 14px; }
 .empty-icon { font-size: 36px; margin-bottom: 12px; display: block; }
-
 .divider { height: 1px; background: #f0f0f0; margin: 20px 0; }
+.api-box { background: #f8faff; border: 1.5px solid #dbeafe; border-radius: 14px; padding: 16px; margin-bottom: 16px; }
+.api-box-title { font-size: 13px; font-weight: 600; color: #2563eb; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.key-input { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #e8e8e8; font-size: 13px; color: #1a1a1a; background: #fff; margin-bottom: 8px; }
+.key-input:focus { outline: none; border-color: #2563eb; }
+.qnet-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.qnet-item { border: 1.5px solid #e8e8e8; border-radius: 12px; padding: 12px 14px; cursor: pointer; background: #fff; text-align: left; width: 100%; transition: all 0.15s; }
+.qnet-item:hover { border-color: #2563eb; background: #f0f6ff; }
+.qnet-item-title { font-size: 13px; font-weight: 600; color: #1a1a1a; line-height: 1.4; }
+.qnet-item-meta { font-size: 11px; color: #aaa; margin-top: 3px; }
+.loading-txt { text-align: center; padding: 20px; color: #888; font-size: 13px; }
 </style>
 </head>
 <body>
 <div id="app">
 
-<!-- 홈 화면 -->
 <div id="screen-home" class="screen active">
   <div class="home-hero">
     <div class="home-title">자격증 기출문제<br><span>풀이 플랫폼</span></div>
     <div class="home-sub">큐넷 공개문제 기반 · 채점·오답·노트 자동 저장</div>
   </div>
-
   <div style="padding: 0 20px;">
+
+    <div class="api-box">
+      <div class="api-box-title"><i class="ti ti-cloud-download" aria-hidden="true"></i> 큐넷 공개문제 불러오기</div>
+      <input class="key-input" id="api-key" placeholder="공공데이터포털 서비스키 입력 (선택)">
+      <div class="grid2" style="margin-bottom:8px">
+        <select id="qnet-qualgb">
+          <option value="T">국가기술자격</option>
+          <option value="C">과정평가형</option>
+          <option value="W">일학습병행</option>
+        </select>
+        <input class="key-input" style="margin:0" id="qnet-jmnm" placeholder="종목명 검색">
+      </div>
+      <button class="btn-primary" style="margin-top:0;font-size:14px;padding:12px" onclick="loadQnetList()">
+        <i class="ti ti-download" aria-hidden="true"></i> 목록 불러오기
+      </button>
+      <div id="qnet-list-wrap"></div>
+    </div>
+
+    <div class="divider"></div>
     <div class="section-label">시험 선택</div>
     <div class="select-wrap">
       <select id="sel-cert">
-        <option>정보처리기능사</option>
-        <option>정보처리산업기사</option>
-        <option>컴퓨터활용능력 1급</option>
-        <option>산업안전기사</option>
-        <option>전기기사</option>
+        <option>정보처리기능사</option><option>정보처리산업기사</option>
+        <option>컴퓨터활용능력 1급</option><option>산업안전기사</option><option>전기기사</option>
       </select>
     </div>
     <div class="grid2">
-      <div class="select-wrap">
-        <select id="sel-year">
-          <option>2024년</option><option>2023년</option><option>2022년</option>
-        </select>
-      </div>
-      <div class="select-wrap">
-        <select id="sel-round">
-          <option>1회</option><option>2회</option><option>3회</option><option>4회</option>
-        </select>
-      </div>
+      <div class="select-wrap"><select id="sel-year"><option>2024년</option><option>2023년</option><option>2022년</option></select></div>
+      <div class="select-wrap"><select id="sel-round"><option>1회</option><option>2회</option><option>3회</option><option>4회</option></select></div>
     </div>
 
     <div class="divider"></div>
@@ -225,16 +156,13 @@ select:focus { outline: none; border-color: #2563eb; }
     <div class="mode-grid">
       <button class="mode-card selected" data-mode="순차" onclick="selectMode(this)">
         <i class="ti ti-list-numbers mode-icon" aria-hidden="true"></i>
-        <span class="mode-name">순차 풀이</span>
-        <span class="mode-desc">1번부터 차례로</span>
+        <span class="mode-name">순차 풀이</span><span class="mode-desc">1번부터 차례로</span>
       </button>
       <button class="mode-card" data-mode="랜덤" onclick="selectMode(this)">
         <i class="ti ti-arrows-shuffle mode-icon" aria-hidden="true"></i>
-        <span class="mode-name">랜덤 풀이</span>
-        <span class="mode-desc">무작위 순서</span>
+        <span class="mode-name">랜덤 풀이</span><span class="mode-desc">무작위 순서</span>
       </button>
     </div>
-
     <button class="btn-primary" onclick="startExam()">
       <i class="ti ti-player-play" aria-hidden="true"></i> 문제 풀이 시작
     </button>
@@ -244,92 +172,58 @@ select:focus { outline: none; border-color: #2563eb; }
   </div>
 </div>
 
-<!-- 문제 풀이 화면 -->
 <div id="screen-exam" class="screen">
   <div class="header">
-    <button class="header-back" onclick="confirmBack()" aria-label="홈으로">
-      <i class="ti ti-chevron-left" style="font-size:22px"></i>
-    </button>
+    <button class="header-back" onclick="confirmBack()" aria-label="홈으로"><i class="ti ti-chevron-left" style="font-size:22px"></i></button>
     <span class="header-title" id="exam-title">정보처리기능사</span>
     <span class="header-badge" id="exam-badge">1회</span>
   </div>
-
   <div class="progress-wrap">
-    <div class="progress-top">
-      <span class="progress-num" id="q-counter">1 / 10</span>
-      <span class="progress-pct" id="q-pct">0%</span>
-    </div>
+    <div class="progress-top"><span class="progress-num" id="q-counter">1 / 10</span><span class="progress-pct" id="q-pct">0%</span></div>
     <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
   </div>
-
   <div style="padding: 0 20px;">
-    <div class="q-card">
-      <div class="q-num" id="q-num">문제 1</div>
-      <div class="q-text" id="q-text"></div>
-    </div>
-
+    <div class="q-card"><div class="q-num" id="q-num">문제 1</div><div class="q-text" id="q-text"></div></div>
     <div class="choices" id="choices"></div>
     <div class="explain-box" id="explain-box"></div>
-
     <div class="memo-section">
       <span class="memo-label">내 메모</span>
       <textarea class="memo-area" id="memo-input" placeholder="이 문제에 대한 메모를 남기세요…"></textarea>
-      <div class="memo-row">
-        <button class="memo-save" onclick="saveMemo()">저장</button>
-        <span class="memo-saved" id="memo-saved">저장됨 ✓</span>
-      </div>
+      <div class="memo-row"><button class="memo-save" onclick="saveMemo()">저장</button><span class="memo-saved" id="memo-saved">저장됨 ✓</span></div>
     </div>
-
     <div class="nav-row" style="margin-top: 12px;">
-      <button class="nav-btn" id="btn-prev" onclick="prevQ()">
-        <i class="ti ti-arrow-left"></i> 이전
-      </button>
-      <button class="nav-btn next" id="btn-next" onclick="nextQ()">
-        다음 <i class="ti ti-arrow-right"></i>
-      </button>
+      <button class="nav-btn" id="btn-prev" onclick="prevQ()"><i class="ti ti-arrow-left"></i> 이전</button>
+      <button class="nav-btn next" id="btn-next" onclick="nextQ()">다음 <i class="ti ti-arrow-right"></i></button>
     </div>
   </div>
 </div>
 
-<!-- 결과 화면 -->
 <div id="screen-result" class="screen">
   <div class="header">
-    <button class="header-back" onclick="showScreen('screen-home')" aria-label="홈으로">
-      <i class="ti ti-chevron-left" style="font-size:22px"></i>
-    </button>
+    <button class="header-back" onclick="showScreen('screen-home')" aria-label="홈으로"><i class="ti ti-chevron-left" style="font-size:22px"></i></button>
     <span class="header-title">채점 결과</span>
   </div>
-
   <div class="result-hero">
     <div class="result-score" id="result-score">0%</div>
     <div class="result-label" id="result-label"></div>
     <span class="result-badge" id="result-badge"></span>
   </div>
-
   <div style="padding: 0 20px;">
     <div class="stat-grid" id="stat-grid"></div>
     <div class="divider"></div>
     <div class="section-label">틀린 문제</div>
     <div id="result-wrong-list"></div>
-    <button class="btn-primary" onclick="showScreen('screen-home')">
-      <i class="ti ti-refresh"></i> 다시 시작
-    </button>
-    <button class="btn-primary secondary" onclick="showScreen('screen-wrong')">
-      <i class="ti ti-bookmarks"></i> 오답 노트 전체 보기
-    </button>
+    <button class="btn-primary" onclick="showScreen('screen-home')"><i class="ti ti-refresh"></i> 다시 시작</button>
+    <button class="btn-primary secondary" onclick="showScreen('screen-wrong')"><i class="ti ti-bookmarks"></i> 오답 노트 전체 보기</button>
   </div>
 </div>
 
-<!-- 오답 노트 화면 -->
 <div id="screen-wrong" class="screen">
   <div class="header">
-    <button class="header-back" onclick="showScreen('screen-home')" aria-label="홈으로">
-      <i class="ti ti-chevron-left" style="font-size:22px"></i>
-    </button>
+    <button class="header-back" onclick="showScreen('screen-home')" aria-label="홈으로"><i class="ti ti-chevron-left" style="font-size:22px"></i></button>
     <span class="header-title">오답 노트</span>
     <button onclick="clearWrong()" style="background:none;border:none;cursor:pointer;font-size:12px;color:#aaa;">초기화</button>
   </div>
-
   <div style="padding: 0 20px;">
     <div class="tab-bar">
       <button class="tab active" onclick="filterWrong('all',this)">전체</button>
@@ -341,19 +235,21 @@ select:focus { outline: none; border-color: #2563eb; }
 </div>
 
 </div>
-
 <script>
+const SERVICE_KEY = '5bb6eb697917f814dc448fc8bf9fc49461ce534549147f4a642b9afce56d87a2';
+const API_BASE = 'https://apis.data.go.kr/B490007/openQst';
+
 const QUESTIONS = [
   {id:1,text:"다음 중 운영체제의 기능으로 옳지 않은 것은?",choices:["프로세스 관리","메모리 관리","응용 프로그램 개발","주변 장치 관리"],answer:2,explain:"운영체제는 프로세스, 메모리, 파일, 주변 장치 관리를 담당하지만, 응용 프로그램 개발은 개발자의 영역으로 OS의 직접 기능이 아닙니다."},
   {id:2,text:"CPU의 구성 요소가 아닌 것은?",choices:["제어 장치(CU)","산술논리 연산 장치(ALU)","레지스터","캐시 디스크"],answer:3,explain:"CPU는 CU, ALU, 레지스터로 구성됩니다. '캐시 디스크'라는 용어는 없으며, 캐시 메모리와 디스크를 혼동하지 않도록 주의하세요."},
-  {id:3,text:"OSI 7계층에서 데이터 링크 계층(Layer 2)의 역할은?",choices:["경로 설정","동일 네트워크 내 노드 간 신뢰성 있는 전송","응용 프로그램 서비스 제공","암호화 및 복호화"],answer:1,explain:"데이터 링크 계층은 같은 네트워크 세그먼트 내에서 노드 간 오류 없는 데이터 전달을 담당합니다. 경로 설정은 3계층(네트워크 계층)의 역할입니다."},
+  {id:3,text:"OSI 7계층에서 데이터 링크 계층(Layer 2)의 역할은?",choices:["경로 설정","동일 네트워크 내 노드 간 신뢰성 있는 전송","응용 프로그램 서비스 제공","암호화 및 복호화"],answer:1,explain:"데이터 링크 계층은 같은 네트워크 세그먼트 내에서 노드 간 오류 없는 데이터 전달을 담당합니다. 경로 설정은 3계층의 역할입니다."},
   {id:4,text:"관계형 데이터베이스에서 기본 키(Primary Key)의 특성으로 옳지 않은 것은?",choices:["유일성 — 중복 값이 없어야 한다","최소성 — 꼭 필요한 속성만 포함한다","NULL 허용 — 값이 없을 수 있다","개체 무결성 보장"],answer:2,explain:"기본 키는 NULL을 허용하지 않습니다. 기본 키의 핵심 조건은 유일성과 NOT NULL입니다."},
-  {id:5,text:"애자일(Agile) 개발 방법론의 특징으로 옳은 것은?",choices:["사전에 완전한 요구사항 정의 필요","짧은 반복 주기(스프린트)로 개발","문서 작성을 최우선으로 한다","변경에 소극적으로 대응한다"],answer:1,explain:"애자일은 짧은 반복 주기(스프린트)를 통해 점진적으로 개발하며, 변화에 유연하게 대응하는 방법론입니다."},
+  {id:5,text:"애자일(Agile) 개발 방법론의 특징으로 옳은 것은?",choices:["사전에 완전한 요구사항 정의 필요","짧은 반복 주기(스프린트)로 개발","문서 작성을 최우선으로 한다","변경에 소극적으로 대응한다"],answer:1,explain:"애자일은 짧은 반복 주기로 점진적으로 개발하며, 변화에 유연하게 대응하는 방법론입니다."},
   {id:6,text:"다음 C언어 코드의 출력 결과는?\n\nint a = 10, b = 3;\nprintf(\"%d\", a % b);",choices:["0","1","3","10"],answer:1,explain:"% 연산자는 나머지를 구합니다. 10 ÷ 3 = 3 나머지 1이므로 출력은 1입니다."},
-  {id:7,text:"IPv4 주소 체계에서 클래스 C의 범위로 옳은 것은?",choices:["0.0.0.0 ~ 127.255.255.255","128.0.0.0 ~ 191.255.255.255","192.0.0.0 ~ 223.255.255.255","224.0.0.0 ~ 239.255.255.255"],answer:2,explain:"IPv4 클래스 C는 첫 번째 옥텟이 192~223인 주소 범위입니다. A(0~127), B(128~191), D(224~239 멀티캐스트)와 구분하여 암기하세요."},
-  {id:8,text:"정규화(Normalization)의 목적으로 옳지 않은 것은?",choices:["데이터 중복 제거","이상(Anomaly) 현상 방지","쿼리 속도 항상 향상","데이터 무결성 보장"],answer:2,explain:"정규화는 중복 제거와 이상 현상 방지가 목적이지만, 테이블 분리로 조인이 늘어 오히려 속도가 느려질 수 있습니다. 속도 향상은 비정규화(역정규화)의 목적입니다."},
-  {id:9,text:"프로세스 스케줄링 중 선점형(Preemptive)에 해당하는 것은?",choices:["FCFS(First Come First Served)","SJF(Shortest Job First) 비선점","Round Robin","비선점 우선순위"],answer:2,explain:"Round Robin은 대표적인 선점형 스케줄링으로, 각 프로세스에 동일한 타임슬라이스를 주고 시간 초과 시 강제로 CPU를 빼앗습니다."},
-  {id:10,text:"해싱(Hashing)에 대한 설명으로 옳은 것은?",choices:["항상 O(n) 검색 시간을 보장한다","충돌(Collision)이 발생할 수 있다","정렬된 데이터에서만 사용 가능하다","트리 구조로 데이터를 저장한다"],answer:1,explain:"해싱은 평균 O(1)의 검색 속도를 제공하지만, 서로 다른 키가 같은 해시 값을 가지는 충돌(Collision)이 발생할 수 있습니다."}
+  {id:7,text:"IPv4 주소 체계에서 클래스 C의 범위로 옳은 것은?",choices:["0.0.0.0 ~ 127.255.255.255","128.0.0.0 ~ 191.255.255.255","192.0.0.0 ~ 223.255.255.255","224.0.0.0 ~ 239.255.255.255"],answer:2,explain:"IPv4 클래스 C는 첫 번째 옥텟이 192~223인 주소 범위입니다."},
+  {id:8,text:"정규화(Normalization)의 목적으로 옳지 않은 것은?",choices:["데이터 중복 제거","이상(Anomaly) 현상 방지","쿼리 속도 항상 향상","데이터 무결성 보장"],answer:2,explain:"정규화는 중복 제거와 이상 현상 방지가 목적이지만, 테이블 분리로 조인이 늘어 속도가 느려질 수 있습니다."},
+  {id:9,text:"프로세스 스케줄링 중 선점형(Preemptive)에 해당하는 것은?",choices:["FCFS(First Come First Served)","SJF(Shortest Job First) 비선점","Round Robin","비선점 우선순위"],answer:2,explain:"Round Robin은 대표적인 선점형 스케줄링으로, 타임슬라이스 초과 시 강제로 CPU를 빼앗습니다."},
+  {id:10,text:"해싱(Hashing)에 대한 설명으로 옳은 것은?",choices:["항상 O(n) 검색 시간을 보장한다","충돌(Collision)이 발생할 수 있다","정렬된 데이터에서만 사용 가능하다","트리 구조로 데이터를 저장한다"],answer:1,explain:"해싱은 평균 O(1)의 검색 속도를 제공하지만, 충돌(Collision)이 발생할 수 있습니다."}
 ];
 
 let state = {
@@ -375,6 +271,39 @@ function selectMode(el) {
   el.classList.add('selected');
   state.mode = el.dataset.mode;
 }
+
+async function loadQnetList() {
+  const key = (document.getElementById('api-key').value || SERVICE_KEY).trim();
+  const qualgb = document.getElementById('qnet-qualgb').value;
+  const jmnm = document.getElementById('qnet-jmnm').value.trim();
+  const wrap = document.getElementById('qnet-list-wrap');
+  wrap.innerHTML = '<div class="loading-txt">불러오는 중...</div>';
+  let url = API_BASE + '/getOpenQstList?serviceKey=' + encodeURIComponent(key) + '&numOfRows=20&pageNo=1&dataFormat=json&qualgbCd=' + qualgb;
+  if (jmnm) url += '&jmNm=' + encodeURIComponent(jmnm);
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.header && data.header.resultCode === '00' && data.body && data.body.items) {
+      const items = data.body.items;
+      if (!items.length) { wrap.innerHTML = '<div class="loading-txt">검색 결과가 없습니다.</div>'; return; }
+      wrap.innerHTML = '<div style="font-size:12px;color:#888;margin:8px 0">총 ' + data.body.totalCount + '건 중 ' + items.length + '건</div><div class="qnet-list">' +
+        items.map(it => '<button class="qnet-item" onclick="openQnet(' + it.artlSeq + ')">' +
+          '<div class="qnet-item-title">' + esc(it.title) + '</div>' +
+          '<div class="qnet-item-meta">' + (it.jmNm||'종목 미분류') + (it.seriesNm?' · '+it.seriesNm:'') + '</div>' +
+          '</button>').join('') + '</div>';
+    } else {
+      wrap.innerHTML = '<div style="color:#dc2626;font-size:13px;padding:12px 0">오류: ' + (data.header ? data.header.resultMsg : '응답 오류') + '</div>';
+    }
+  } catch(e) {
+    wrap.innerHTML = '<div style="color:#dc2626;font-size:13px;padding:12px 0">네트워크 오류. CORS 제한일 수 있습니다.</div>';
+  }
+}
+
+function openQnet(artlSeq) {
+  window.open('https://www.q-net.or.kr/cst012.do?id=cst01201&gSite=Q', '_blank');
+}
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function startExam() {
   state.cert = document.getElementById('sel-cert').value;
@@ -398,7 +327,6 @@ function renderQuestion() {
   document.getElementById('progress-fill').style.width = (done/total*100) + '%';
   document.getElementById('q-num').textContent = '문제 ' + (state.current+1);
   document.getElementById('q-text').textContent = q.text;
-
   const choicesEl = document.getElementById('choices');
   choicesEl.innerHTML = '';
   ['①','②','③','④'].forEach((lbl, i) => {
@@ -408,18 +336,13 @@ function renderQuestion() {
     btn.onclick = () => answer(i);
     choicesEl.appendChild(btn);
   });
-
   const exp = document.getElementById('explain-box');
   exp.className = 'explain-box'; exp.textContent = '';
-
   const memoKey = state.cert+'_'+q.id;
   document.getElementById('memo-input').value = state.memos[memoKey] || '';
   document.getElementById('memo-saved').style.opacity = '0';
-
-  const prev = document.getElementById('btn-prev');
-  prev.disabled = state.current === 0;
+  document.getElementById('btn-prev').disabled = state.current === 0;
   document.getElementById('btn-next').textContent = state.current === total-1 ? '채점하기 ✓' : '다음 →';
-
   if (state.answered[state.current] !== undefined) restoreAnswer();
 }
 
@@ -436,7 +359,6 @@ function answer(idx) {
   const exp = document.getElementById('explain-box');
   exp.textContent = (idx === q.answer ? '✓ 정답입니다! ' : '✗ 오답입니다. ') + q.explain;
   exp.className = 'explain-box show ' + (idx === q.answer ? 'correct-exp' : 'wrong-exp');
-
   if (idx !== q.answer) {
     const exists = state.wrongList.find(w => w.qid === q.id && w.cert === state.cert);
     if (!exists) {
@@ -444,15 +366,13 @@ function answer(idx) {
       localStorage.setItem('cert_wrong', JSON.stringify(state.wrongList));
     }
   }
-  const done = Object.keys(state.answered).length;
-  const total = state.questions.length;
+  const done = Object.keys(state.answered).length, total = state.questions.length;
   document.getElementById('q-pct').textContent = Math.round(done/total*100) + '%';
   document.getElementById('progress-fill').style.width = (done/total*100) + '%';
 }
 
 function restoreAnswer() {
-  const q = state.questions[state.current];
-  const idx = state.answered[state.current];
+  const q = state.questions[state.current], idx = state.answered[state.current];
   document.querySelectorAll('.choice-btn').forEach((b,i) => {
     b.disabled = true;
     if (i === q.answer) b.classList.add('correct');
@@ -470,13 +390,11 @@ function nextQ() {
 function prevQ() { if (state.current > 0) { state.current--; renderQuestion(); } }
 
 function saveMemo() {
-  const q = state.questions[state.current];
-  const key = state.cert+'_'+q.id;
+  const q = state.questions[state.current], key = state.cert+'_'+q.id;
   state.memos[key] = document.getElementById('memo-input').value;
   localStorage.setItem('cert_memos', JSON.stringify(state.memos));
   const el = document.getElementById('memo-saved');
-  el.style.opacity = '1';
-  setTimeout(() => el.style.opacity='0', 1500);
+  el.style.opacity = '1'; setTimeout(() => el.style.opacity='0', 1500);
 }
 
 function confirmBack() {
@@ -489,23 +407,17 @@ function confirmBack() {
 function showResult() {
   const total = state.questions.length;
   const correct = state.questions.filter((q,i) => state.answered[i] === q.answer).length;
-  const wrong = total - correct;
-  const pct = Math.round(correct/total*100);
-  const pass = pct >= 60;
-
+  const wrong = total - correct, pct = Math.round(correct/total*100), pass = pct >= 60;
   const scoreEl = document.getElementById('result-score');
-  scoreEl.textContent = pct + '%';
-  scoreEl.className = 'result-score ' + (pass ? 'pass' : 'fail');
+  scoreEl.textContent = pct + '%'; scoreEl.className = 'result-score ' + (pass ? 'pass' : 'fail');
   document.getElementById('result-label').textContent = correct + '개 정답 / ' + total + '문제';
   const badge = document.getElementById('result-badge');
   badge.textContent = pass ? '🎉 합격 기준 달성!' : '😅 조금 더 공부해봐요';
   badge.className = 'result-badge ' + (pass ? 'pass' : 'fail');
-
   document.getElementById('stat-grid').innerHTML =
     '<div class="stat-card"><span class="stat-val green">'+correct+'</span><span class="stat-lbl">정답</span></div>'+
     '<div class="stat-card"><span class="stat-val red">'+wrong+'</span><span class="stat-lbl">오답</span></div>'+
     '<div class="stat-card"><span class="stat-val">'+total+'</span><span class="stat-lbl">전체</span></div>';
-
   const wrongHtml = state.questions.map((q,i) => {
     if (state.answered[i] === q.answer) return '';
     return '<div class="wrong-item" onclick="reviewQ('+i+')">'+
@@ -539,15 +451,12 @@ function renderWrongList(filter) {
 
 function filterWrong(f, el) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  renderWrongList(f);
+  el.classList.add('active'); renderWrongList(f);
 }
 
 function clearWrong() {
   if (!confirm('오답 노트를 모두 초기화할까요?')) return;
-  state.wrongList = [];
-  localStorage.setItem('cert_wrong','[]');
-  renderWrongList('all');
+  state.wrongList = []; localStorage.setItem('cert_wrong','[]'); renderWrongList('all');
 }
 </script>
 </body>
