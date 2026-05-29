@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>한국 자격증 기출문제 풀이 플랫폼</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <h1>한국 자격증 기출문제 풀이 플랫폼</h1>
+        <p>모바일 퍼스트 기출 학습</p>
+      </header>
+
+      <main>
+        <section class="card">
+          <h2>시험 선택</h2>
+          <div class="grid">
+            <label>
+              자격증
+              <select id="examSelect"></select>
+            </label>
+            <label>
+              연도
+              <select id="yearSelect"></select>
+            </label>
+            <label>
+              회차
+              <select id="roundSelect"></select>
+            </label>
+            <label>
+              풀이 모드
+              <select id="modeSelect">
+                <option value="sequential">순차 풀이</option>
+                <option value="random">랜덤 풀이</option>
+              </select>
+            </label>
+          </div>
+          <button id="startBtn" class="btn primary">문제 풀이 시작</button>
+        </section>
+
+        <section class="card">
+          <h2>Q-Net 공개문제 API 연동 (1단계)</h2>
+          <p class="hint">
+            발급받은 서비스키로 공개문제 목록 조회를 테스트합니다.
+            <strong>index.html 더블클릭이 아니라, 아래 서버 실행 후 http://localhost:3000 으로 접속해야 합니다.</strong>
+          </p>
+          <div class="grid">
+            <label>
+              ServiceKey
+              <input id="apiKeyInput" type="text" placeholder="공공데이터포털 서비스키 입력" />
+            </label>
+            <label>
+              페이지 번호
+              <input id="apiPageInput" type="number" min="1" value="1" />
+            </label>
+            <label>
+              조회 개수
+              <input id="apiRowsInput" type="number" min="1" max="100" value="10" />
+            </label>
+            <label>
+              자격 구분
+              <select id="qualgbCdSelect">
+                <option value="T">T - 국가기술자격</option>
+                <option value="C">C - 과정평가형자격</option>
+                <option value="W">W - 일학습병행자격</option>
+              </select>
+            </label>
+          </div>
+          <p class="hint">
+            활용신청 API 이름: <strong>국가자격 공개문제 조회 서비스</strong> (data.go.kr)
+          </p>
+          <button id="fetchApiBtn" class="btn primary">공개문제 목록 불러오기</button>
+          <p id="apiStatus" class="hint">아직 API를 호출하지 않았습니다.</p>
+          <div id="apiList" class="list"></div>
+        </section>
+
+        <section class="card hidden" id="solveSection">
+          <div class="row between">
+            <h2 id="progressTitle">문제</h2>
+            <button id="showWrongBtn" class="btn ghost">오답만 보기</button>
+          </div>
+          <article id="questionCard"></article>
+          <div class="row gap">
+            <button id="prevBtn" class="btn">이전</button>
+            <button id="nextBtn" class="btn">다음</button>
+          </div>
+        </section>
+
+        <section class="card hidden" id="wrongSection">
+          <h2>오답 정리</h2>
+          <p id="wrongSummary">아직 오답이 없습니다.</p>
+          <div id="wrongList" class="list"></div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./sample-data.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
